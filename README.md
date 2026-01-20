@@ -38,7 +38,7 @@ graph TD
         subgraph "Node 1 (Primary)"
             P1:::proxy
             S1:::dead
-            P1 -- "❌ Health Check Failed" --> S1
+            P1 -- "Health Check Failed" --> S1
         end
 
         subgraph "Node 2 (Failover Target)"
