@@ -20,44 +20,6 @@ We introduce a **Sentinel** agent on every node using the **Sidecar Pattern**.
 2. **Failover Groups:** Nodes are logically partitioned into groups (e.g., "Sister Stores"). A node in `Group A` will **only** failover to other peers in `Group A`, preventing split-brain routing across mismatched datasets.
 3. **SWIM Gossip Protocol:** Nodes exchange health information via UDP. This allows the cluster to detect failures in  time, regardless of cluster size.
 
-### Architecture Diagram
-
-```mermaid
-graph TD
-    %% Styling
-    classDef client fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef proxy fill:#bbf,stroke:#333,stroke-width:2px;
-    classDef solr fill:#bfb,stroke:#333,stroke-width:2px;
-    classDef dead fill:#f00,stroke:#333,stroke-width:2px,color:#fff;
-
-    Client[Legacy Application Client]:::client
-
-    subgraph "Failover Group A (Inventory Shard)"
-        direction TB
-        
-        subgraph "Node 1 (Primary)"
-            P1:::proxy
-            S1:::dead
-            P1 -- "Health Check Failed" --> S1
-        end
-
-        subgraph "Node 2 (Failover Target)"
-            P2:::proxy
-            S2:::solr
-            P2 -->|Local Traffic| S2
-        end
-        
-        %% Gossip Protocol
-        P1 <==>|UDP Gossip :7946| P2
-    end
-
-    %% Traffic Flow
-    Client -->|1. Request HTTP/8984| P1
-    P1 -.->|2. ROUTE (Failover)| P2
-    P2 -.->|3. Proxy| S2
-
-```
-
 ## ⚡ Key Features
 
 * **Zero-Copy Streaming:** Uses `httpx` and `asyncio` to stream large Solr JSON responses (10MB+) without buffering them in memory, ensuring <2ms latency overhead.
