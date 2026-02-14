@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "solr-sentinel-mesh"
+version = "0.1.0"
+dependencies = [
+    "fastapi[standard]", # Includes Uvicorn and basic production deps
+    "uvicorn",           # Explicitly listed if you need specific versions
+    "httpx",             # For async client requests/testing
+    "pydantic",          # Data validation
+    "structlog",         # Structured logging
+]
