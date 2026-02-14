@@ -5,10 +5,17 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "solr-sentinel-mesh"
 version = "0.1.0"
+description = "Decentralized mesh for solr high availability"
+requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]", # Includes Uvicorn and basic production deps
-    "uvicorn",           # Explicitly listed if you need specific versions
     "httpx",             # For async client requests/testing
     "pydantic",          # Data validation
     "structlog",         # Structured logging
 ]
+
+# Assuming code is in /src/solr_sentinel/main.py
+# and it has run function
+# we desing the CLI command solr-sentinel to run the app
+[project.scripts]
+solr-sentinel = "solr_sentinel.main:main"
