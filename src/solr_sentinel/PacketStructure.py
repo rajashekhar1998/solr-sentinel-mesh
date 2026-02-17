@@ -1,3 +1,5 @@
+from typing import Optional, Dict, Any
+
 from pydantic import BaseModel
 from datetime import datetime
 from ipaddress import IPv4Address
@@ -12,14 +14,8 @@ class PacketStructure(BaseModel):
     time_stamp : datetime
     status : NodeState
 
-packet = PacketStructure(
-    type = MessageType.PING,
-    host_address = "solr-1",
-    time_stamp = datetime.now(datetime.UTC),
-    status = NodeState.LOCAL
-)
-
-json_payload = packet.model_dump_json()
+    class Config:
+        use_enum_values = True
 
 
 

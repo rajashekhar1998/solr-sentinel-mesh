@@ -1,8 +1,7 @@
 import asyncio
 from typing import Optional
 
-
-from src.solr_sentinel import PacketStructure
+from src.solr_sentinel.PacketStructure import PacketStructure
 
 class UdpTransport(asyncio.DatagramProtocol):
     # It can be confusing because asyncio.DatagramProtocol works differently than standard Python classes.
